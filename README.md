@@ -89,4 +89,3 @@ Add this to your MCP configuration:
 🧑‍💻 Author
 
 Suvidha Yadav
-💼 GitHub￼
