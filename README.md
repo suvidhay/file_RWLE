@@ -78,7 +78,7 @@ Add this to your MCP configuration:
   "mcpServers": {
     "file_rwle": {
       "command": "npx",
-      "args": ["-y", "file_rwle"]
+      "args": ["-y", "mcp-file-rwle"]
     }
   }
 }

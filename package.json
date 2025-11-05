@@ -1,8 +1,11 @@
 {
   "name": "mcp-file-rwle",
-  "version": "1.0.6",
+  "version": "1.0.8",
   "description": "A simple MCP server to read, write, edit, and list files inside a folder.",
   "main": "index.js",
+  "bin": {
+    "mcp-file-rwle": "index.js"
+  },
   "type": "module",
   "scripts": {
     "start": "node index.js"
@@ -24,6 +27,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/suvidhay/File_RWLE.git"
+    "url": "git+https://github.com/suvidhay/File_RWLE.git"
   }
 }
