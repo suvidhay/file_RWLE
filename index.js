@@ -1,4 +1,5 @@
-// index.js
+#!/usr/bin/env node
+
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
@@ -11,7 +12,7 @@ if (!fs.existsSync(ROOT_DIR)) fs.mkdirSync(ROOT_DIR);
 const server = new McpServer({
   name: "File MCP Server",
   version: "1.0.0",
-  description: "A simple MCP server to read, write, edit, and list files inside a folder."
+  description: "A simple MCP server to read, write, edit, and list files inside a folder.",
 });
 
 // 🧾 TOOL 1: List files
@@ -23,7 +24,7 @@ server.registerTool(
   },
   async () => {
     const files = fs.readdirSync(ROOT_DIR);
-    return { structuredContent: { files } };
+    return { structuredOutput: { files } };
   }
 );
 
@@ -39,7 +40,7 @@ server.registerTool(
     const filePath = path.join(ROOT_DIR, filename);
     if (!fs.existsSync(filePath)) throw new Error("File not found");
     const content = fs.readFileSync(filePath, "utf-8");
-    return { structuredContent: { content } };
+    return { structuredOutput: { content } };
   }
 );
 
@@ -54,7 +55,7 @@ server.registerTool(
   async ({ filename, content }) => {
     const filePath = path.join(ROOT_DIR, filename);
     fs.writeFileSync(filePath, content, "utf-8");
-    return { structuredContent: { success: true } };
+    return { structuredOutput: { success: true } };
   }
 );
 
@@ -82,7 +83,7 @@ server.registerTool(
     });
 
     fs.writeFileSync(filePath, lines.join("\n"), "utf-8");
-    return { structuredContent: { success: true, message: `Edited ${edits.length} line(s).` } };
+    return { structuredOutput: { success: true, message: `Edited ${edits.length} line(s).` } };
   }
 );
 
@@ -97,10 +98,10 @@ server.registerTool(
   async ({ filename }) => {
     const filePath = path.join(ROOT_DIR, filename);
     if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
-    return { structuredContent: { success: true } };
+    return { structuredOutput: { success: true } };
   }
 );
 
-// 🚀 Start the server over stdio transport
-await server.connect(new StdioServerTransport());
-console.log("✅ File MCP Server started successfully!");
+// 🚀 Start the server
+const transport = new StdioServerTransport();
+await server.connect(transport);
